@@ -111,58 +111,58 @@ public class BurgerTest {
         burger.addIngredient(cutletFillingIngredient);
 
         burger.removeIngredient(0);
-    // проверяем, что ингр1 и 2 остались
-    assertTrue("Ингредиент 1 должен остаться",burger.ingredients.contains(chiliSauceIngredient));
-    assertTrue("Ингредиент 2 должен остаться",burger.ingredients.contains(cutletFillingIngredient));
-}
+        // проверяем, что ингр1 и 2 остались
+        assertTrue("Ингредиент 1 должен остаться", burger.ingredients.contains(chiliSauceIngredient));
+        assertTrue("Ингредиент 2 должен остаться", burger.ingredients.contains(cutletFillingIngredient));
+    }
 
-@Test //тест на изменение позиций ингред dinosaur на последнее место
-public void moveIngredientShouldChangeOrderPositionTest() {
-    //добавляем 3 игред
-    burger.addIngredient(dinosaurFillingIngredient);
-    burger.addIngredient(chiliSauceIngredient);
-    burger.addIngredient(cutletFillingIngredient);
-    //перемещаем первый на последнее место 0 -> 2
-    burger.moveIngredient(0, 2);
-    //проверяем новый порядок
-    assertEquals("На позиции 0 стоит chiliSauceIngredient", chiliSauceIngredient, burger.ingredients.get(0));
-}
+    @Test //тест на изменение позиций ингред dinosaur на последнее место
+    public void moveIngredientShouldChangeOrderPositionTest() {
+        //добавляем 3 игред
+        burger.addIngredient(dinosaurFillingIngredient);
+        burger.addIngredient(chiliSauceIngredient);
+        burger.addIngredient(cutletFillingIngredient);
+        //перемещаем первый на последнее место 0 -> 2
+        burger.moveIngredient(0, 2);
+        //проверяем новый порядок
+        assertEquals("На позиции 0 стоит chiliSauceIngredient", chiliSauceIngredient, burger.ingredients.get(0));
+    }
 
-//Тесты расчета цены
-@Test
+    //Тесты расчета цены
+    @Test
 //тест расчет цены бургера. Булочка считается за каждую отдельно(верхняя и нижняя = 2) Цена будет=булка*2+ингр1+ингр2+инг3
-public void getPriceShouldCalculateCorrectly() {
-    //добавляем булочку
-    burger.setBuns(bun);
-    //добавляем ингредиенты
-    burger.addIngredient(dinosaurFillingIngredient);
-    burger.addIngredient(chiliSauceIngredient);
-    burger.addIngredient(cutletFillingIngredient);
+    public void getPriceShouldCalculateCorrectly() {
+        //добавляем булочку
+        burger.setBuns(bun);
+        //добавляем ингредиенты
+        burger.addIngredient(dinosaurFillingIngredient);
+        burger.addIngredient(chiliSauceIngredient);
+        burger.addIngredient(cutletFillingIngredient);
 
-    //настраиваем моки и даем цену: булочка = 50 флоат, ингр0 = 35 флоат, ингр1 = 15 флоат, ингр2 = 20 флоат: 50*2+35+15+20=170флоат
-    when(bun.getPrice()).thenReturn(50.0F);
-    when(dinosaurFillingIngredient.getPrice()).thenReturn(35.0F);
-    when(chiliSauceIngredient.getPrice()).thenReturn(25.0F);
-    when(cutletFillingIngredient.getPrice()).thenReturn(20.0F);
+        //настраиваем моки и даем цену: булочка = 50 флоат, ингр0 = 35 флоат, ингр1 = 15 флоат, ингр2 = 20 флоат: 50*2+35+15+20=170флоат
+        when(bun.getPrice()).thenReturn(50.0F);
+        when(dinosaurFillingIngredient.getPrice()).thenReturn(35.0F);
+        when(chiliSauceIngredient.getPrice()).thenReturn(25.0F);
+        when(cutletFillingIngredient.getPrice()).thenReturn(20.0F);
 
-    float expectedPrice = 50.0F * 2 + 35.0F + 25.0F + 20.0F;
+        float expectedPrice = 50.0F * 2 + 35.0F + 25.0F + 20.0F;
 
-    //Проверяем расчет
-    assertEquals("Цена рассчитана неверно", expectedPrice, burger.getPrice(), 1.0F);
-}
+        //Проверяем расчет
+        assertEquals("Цена рассчитана неверно", expectedPrice, burger.getPrice(), 1.0F);
+    }
 
-@Test //тест на получение чека
-public void getReceiptShouldContainBunName() {
+    @Test //тест на получение чека
+    public void getReceiptShouldContainBunName() {
 
-    // Настроим бургер
-    setupBurgerWithBunAndIngredients();
+        // Настроим бургер
+        setupBurgerWithBunAndIngredients();
 
-    // Получаем чек
-    String receipt = burger.getReceipt();
+        // Получаем чек
+        String receipt = burger.getReceipt();
 
-    // Проверяем, что чек содержит всё нужное
-    assertTrue("Чек должен содержать название булочки", receipt.contains("red bun"));
-}
+        // Проверяем, что чек содержит всё нужное
+        assertTrue("Чек должен содержать название булочки", receipt.contains("red bun"));
+    }
 
     @Test
     public void getReceiptShouldContainIngredientNameDinosaur() {
@@ -193,16 +193,16 @@ public void getReceiptShouldContainBunName() {
 
     @Test
     public void getReceiptShouldContainTotalPrice() {
-    //Настроим бургер
+        //Настроим бургер
         setupBurgerWithBunAndIngredients();
 
         String receipt = burger.getReceipt();
 
-    float expectedPrice = 300F * 2 + 200F + 300F + 100F;
-    String expectedPriceString = String.format("Price: %f", expectedPrice); //%f — формат для вещественного (дробного) числа (float или double)
+        float expectedPrice = 300F * 2 + 200F + 300F + 100F;
+        String expectedPriceString = String.format("Price: %f", expectedPrice); //%f — формат для вещественного (дробного) числа (float или double)
 
-    assertTrue("Чек должен содержать итоговую цену", receipt.contains(expectedPriceString));
-}
+        assertTrue("Чек должен содержать итоговую цену", receipt.contains(expectedPriceString));
+    }
 
 
 }
